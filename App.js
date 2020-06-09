@@ -13,6 +13,7 @@ import AddPersonalInfoScreen from "./screens/AddPersonalInfo";
 import PlantsScreen from "./screens/Plants";
 import CartScreen from "./screens/Cart";
 import EditPersonalInfoScreen from "./screens/EditPersonalInfo";
+import ShippingAddressScreen from "./screens/ShippingAddress";
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,10 @@ export default function App(props) {
             <Stack.Screen
               name="edit-personal-info"
               component={EditPersonalInfoScreen}
+            />
+            <Stack.Screen
+              name="shipping-address"
+              component={ShippingAddressScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

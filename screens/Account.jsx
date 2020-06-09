@@ -27,11 +27,12 @@ const AccountScreen = () => {
         <Menu
           title="Personal information"
           icon={require("../assets/images/user-light.png")}
-          onPress={() => navigate("edit-personal-info")}
+          onTap={() => navigate("edit-personal-info")}
         />
         <Menu
           title="Shipping Address"
           icon={require("../assets/images/package.png")}
+          onTap={() => navigate("shipping-address")}
         />
         <Menu title="Log out" />
       </View>
@@ -55,9 +56,9 @@ const Avatar = ({ image }) => {
   );
 };
 
-const Menu = ({ title, icon, onPress }) => {
+const Menu = ({ title, icon, onTap }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.menuContainer}>
+    <TouchableOpacity onPress={onTap} style={styles.menuContainer}>
       <BodyText>{title}</BodyText>
       <Image source={icon} style={styles.icon} />
     </TouchableOpacity>
