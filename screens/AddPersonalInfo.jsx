@@ -21,7 +21,10 @@ const AddPersonalInfoScreen = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
         <Header showBack />
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flex: 1 }}
+        >
           <HeaderText size={32}>Add personal info</HeaderText>
           <View style={{ marginVertical: 15 }} />
           <BodyText bold>Display name</BodyText>
@@ -30,7 +33,9 @@ const AddPersonalInfoScreen = () => {
           <BodyText bold>Phone number</BodyText>
           <TextInput keyboardType="phone-pad" maxLength={15} />
           <View style={{ marginVertical: 15 }} />
-          <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <View
+            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 15 }}
+          >
             <Button
               title="Continue"
               onPress={() => navigation.navigate("root")}
@@ -49,8 +54,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
-    paddingTop: Platform.OS == "ios" ? "5%" : StatusBar.currentHeight + 15,
+    paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
     paddingHorizontal: 25,
-    paddingBottom: Platform.OS == "ios" ? 55 : null, // Footer Height
   },
 });

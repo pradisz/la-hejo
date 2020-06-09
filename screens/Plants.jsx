@@ -122,8 +122,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
-    paddingTop: Platform.OS == "ios" ? "5%" : StatusBar.currentHeight + 15,
-    paddingBottom: 55, // Footer Height
+    paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
   },
   topDetailContainer: {
     flex: 1,

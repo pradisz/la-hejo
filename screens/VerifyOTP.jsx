@@ -22,7 +22,10 @@ const VerifyOTPScreen = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
         <Header showBack />
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flex: 1 }}
+        >
           <HeaderText size={32}>Verify your number</HeaderText>
           <View style={{ marginVertical: 15 }} />
           <BodyText bold>Enter OTP code</BodyText>
@@ -38,7 +41,9 @@ const VerifyOTPScreen = () => {
           <View style={{ marginVertical: 15 }} />
           <TextLink title="Didn't get a text? Resend code" onPress={() => {}} />
           <View style={{ marginVertical: 15 }} />
-          <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <View
+            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 15 }}
+          >
             <Button
               title="Continue"
               onPress={() => navigate("add-personal-info")}
@@ -65,9 +70,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
-    paddingTop: Platform.OS == "ios" ? "5%" : StatusBar.currentHeight + 15,
+    paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
     paddingHorizontal: 25,
-    paddingBottom: Platform.OS == "ios" ? 55 : null, // Footer Height
   },
   numberInput: {
     width: 65,

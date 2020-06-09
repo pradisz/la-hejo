@@ -49,7 +49,7 @@ const SaveButton = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.saveContainer}>
-        <BodyText>Save</BodyText>
+        <BodyText bold>Save</BodyText>
       </View>
     </TouchableOpacity>
   );
