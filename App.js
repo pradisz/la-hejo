@@ -6,8 +6,12 @@ import { Platform, StatusBar } from "react-native";
 import useCachedResources from "./hooks/useCachedResources";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 
-import PlantsScreen from "./screens/PlantsScreen";
-import CartScreen from "./screens/CartScreen";
+import LoginScreen from "./screens/Login";
+import SignupScreen from "./screens/Signup";
+import VerifyOTPScreen from "./screens/VerifyOTP";
+import AddPersonalInfo from "./screens/AddPersonalInfo";
+import PlantsScreen from "./screens/Plants";
+import Cart from "./screens/Cart";
 
 const Stack = createStackNavigator();
 
@@ -26,9 +30,13 @@ export default function App(props) {
               headerShown: false,
             }}
           >
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="login" component={LoginScreen} />
+            <Stack.Screen name="signup" component={SignupScreen} />
+            <Stack.Screen name="verify-otp" component={VerifyOTPScreen} />
+            <Stack.Screen name="add-personal-info" component={AddPersonalInfo} />
+            <Stack.Screen name="root" component={BottomTabNavigator} />
             <Stack.Screen name="plants" component={PlantsScreen} />
-            <Stack.Screen name="cart" component={CartScreen} />
+            <Stack.Screen name="cart" component={Cart} />
           </Stack.Navigator>
         </NavigationContainer>
       </>

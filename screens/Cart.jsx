@@ -8,7 +8,6 @@ import {
   FlatList,
   Image,
 } from "react-native";
-// import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BodyText, PriceText } from "../components/Text";
 import Header from "../components/Header";
@@ -73,12 +72,11 @@ const Footer = ({ total }) => {
       </View>
       <Button
         title="Checkout"
-        bgColor="#F7D57B"
+        accent
+        inverted
         btnStyle={{ borderTopEndRadius: 0, borderBottomEndRadius: 0 }}
         icon={require("../assets/images/arrow-right.png")}
         iconEnd
-        uppercase
-        bold
       />
     </View>
   );

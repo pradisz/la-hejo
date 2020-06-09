@@ -3,12 +3,12 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 
 const CartIcon = ({ count, style, onPress }) => {
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
 
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      onPress={onPress ? onPress : () => navigation.navigate("cart")}
+      onPress={onPress ? onPress : () => navigate("cart")}
     >
       <View style={[styles.container, style]}>
         <Image

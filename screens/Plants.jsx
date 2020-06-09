@@ -106,13 +106,10 @@ const Footer = ({ price }) => {
         <View style={{ marginHorizontal: 10 }} />
         <Button
           title="Buy Now"
-          bgColor="#008576"
+          secondary
           btnStyle={{ borderTopEndRadius: 0, borderBottomEndRadius: 0 }}
           icon={require("../assets/images/arrow-right.png")}
           iconEnd
-          uppercase
-          bold
-          inverted
         />
       </View>
     </View>

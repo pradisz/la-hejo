@@ -8,9 +8,10 @@ const MuliText = (props) => {
       style={[
         props.style,
         {
-          color: props.inverted ? "#FFF" : "#102E39",
+          color: props.inverted ? "#FFF" : props.primary ? "#008576" : "#102E39",
           fontFamily: "muli",
           fontSize: props.size ? props.size : 16,
+          textAlign: props.center && "center",
         },
       ]}
     />
@@ -27,6 +28,7 @@ const PlayfairText = (props) => {
           color: props.inverted ? "#FFF" : "#102E39",
           fontFamily: props.bold ? "playfair-semibold" : "playfair-regular",
           fontSize: props.size ? props.size : 16,
+          textAlign: props.center && "center",
         },
       ]}
     />

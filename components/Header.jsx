@@ -5,8 +5,15 @@ import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import { HeaderText } from "./Text";
 import CartIcon from "./CartIcon";
 
-const STACK_SHOW_BACK = ["cart", "checkout"]; // Show back only
-const STACK_HIDE_CART = ["cart", "account"]; // Hide cart icon Only
+const STACK_SHOW_BACK = ["cart", "checkout"]; // Show back button
+const STACK_HIDE_CART = [
+  "login",
+  "signup",
+  "verify-otp",
+  "add-personal-info",
+  "cart",
+  "account",
+]; // Hide cart icon
 
 const Header = ({ title, style }) => {
   const route = useRoute();

@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { Platform, Image } from "react-native";
 
-import HomeScreen from "../screens/HomeScreen";
-import AccountScreen from "../screens/AccountScreen";
+import HomeScreen from "../screens/Home";
+import AccountScreen from "../screens/Account";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Home";

@@ -6,10 +6,9 @@ import { BodyText } from "./Text";
 const Button = ({
   title,
   onPress,
-  bgColor,
-  uppercase,
-  capitalize,
-  bold,
+  primary,
+  secondary,
+  accent,
   btnStyle,
   textSize,
   iconStart,
@@ -24,28 +23,27 @@ const Button = ({
       style={[
         btnStyle,
         styles.container,
-        { backgroundColor: bgColor && bgColor },
+        primary && { backgroundColor: "#EE6457" },
+        secondary && { backgroundColor: "#008576" },
+        accent && { backgroundColor: "#F7D57B" },
       ]}
     >
       {iconStart && <Image source={icon} />}
       <BodyText
-        bold={bold}
+        bold
         size={textSize}
-        inverted={inverted}
-        style={[
-          styles.title,
-          {
-            textTransform:
-              (capitalize && "capitalize") || (uppercase && "uppercase"),
-          },
-        ]}
+        inverted={inverted ? false : true}
+        style={{
+          textTransform: "uppercase",
+          bottom: 2,
+        }}
       >
         {title}
       </BodyText>
       {iconEnd && (
         <Image
           source={icon}
-          style={[styles.icon, inverted && { tintColor: "#FFF" }]}
+          style={[styles.icon, inverted && { tintColor: "#102E39" }]}
         />
       )}
     </TouchableOpacity>
@@ -60,16 +58,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F0F0F0",
     borderRadius: 10,
     paddingHorizontal: 10,
-  },
-  title: {
-    color: "#102E39",
-    bottom: 2,
   },
   icon: {
     width: 24,
     height: 24,
+    tintColor: "#FFF",
   },
 });

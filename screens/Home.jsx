@@ -117,11 +117,11 @@ const HomeScreen = () => {
 
 const PlantItem = ({ plant }) => {
   const { title, image, price } = plant;
-  const navigation = useNavigation();
+  const { navigate } = useNavigation();
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("plants", { plant: plant })}
+      onPress={() => navigate("plants", { plant: plant })}
       style={{ flex: 1 / 2, paddingHorizontal: 8 }}
     >
       <View>
