@@ -28,7 +28,7 @@ const CartScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
-        <Header title="Cart" />
+        <Header title="Cart" showBack />
         <FlatList
           data={initialData}
           renderItem={({ item }) => <CartItem item={item} />}

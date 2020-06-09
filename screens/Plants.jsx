@@ -32,7 +32,7 @@ const PlantsScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
-        <Header style={{ paddingHorizontal: 25 }} />
+        <Header showBack showCart style={{ paddingHorizontal: 25 }} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderText size={32} style={{ paddingHorizontal: 25 }}>
             {title}

@@ -9,9 +9,10 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import LoginScreen from "./screens/Login";
 import SignupScreen from "./screens/Signup";
 import VerifyOTPScreen from "./screens/VerifyOTP";
-import AddPersonalInfo from "./screens/AddPersonalInfo";
+import AddPersonalInfoScreen from "./screens/AddPersonalInfo";
 import PlantsScreen from "./screens/Plants";
-import Cart from "./screens/Cart";
+import CartScreen from "./screens/Cart";
+import EditPersonalInfoScreen from "./screens/EditPersonalInfo";
 
 const Stack = createStackNavigator();
 
@@ -33,10 +34,17 @@ export default function App(props) {
             <Stack.Screen name="login" component={LoginScreen} />
             <Stack.Screen name="signup" component={SignupScreen} />
             <Stack.Screen name="verify-otp" component={VerifyOTPScreen} />
-            <Stack.Screen name="add-personal-info" component={AddPersonalInfo} />
+            <Stack.Screen
+              name="add-personal-info"
+              component={AddPersonalInfoScreen}
+            />
             <Stack.Screen name="root" component={BottomTabNavigator} />
             <Stack.Screen name="plants" component={PlantsScreen} />
-            <Stack.Screen name="cart" component={Cart} />
+            <Stack.Screen name="cart" component={CartScreen} />
+            <Stack.Screen
+              name="edit-personal-info"
+              component={EditPersonalInfoScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </>

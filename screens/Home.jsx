@@ -100,7 +100,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
-        <Header title="La Hejo" />
+        <Header title="La Hejo" showCart/>
         <FlatList
           data={initialData}
           renderItem={({ item }) => <PlantItem plant={item} />}

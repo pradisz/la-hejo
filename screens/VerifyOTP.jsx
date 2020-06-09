@@ -21,7 +21,7 @@ const VerifyOTPScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
-        <Header />
+        <Header showBack />
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderText size={32}>Verify your number</HeaderText>
           <View style={{ marginVertical: 15 }} />
