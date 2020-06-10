@@ -9,9 +9,9 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import firebase from "firebase";
 
 import { HeaderText, BodyText } from "../components/Text";
-import Header from "../components/Header";
 
 const AccountScreen = () => {
   const { navigate } = useNavigation();
@@ -34,7 +34,7 @@ const AccountScreen = () => {
           icon={require("../assets/images/package.png")}
           onTap={() => navigate("shipping-address")}
         />
-        <Menu title="Log out" />
+        <Menu title="Log out" onTap={() => firebase.auth().signOut()} />
       </View>
     </SafeAreaView>
   );
