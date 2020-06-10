@@ -2,11 +2,7 @@
   "expo": {
     "name": "la-hejo",
     "slug": "la-hejo",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,14 +15,24 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "firebase": {
+        "apiKey": "AIzaSyDZ2zulVGUZAj33STVDEonxX8i5jMjumEc",
+        "authDomain": "lahejo-dev.firebaseapp.com",
+        "databaseURL": "https://lahejo-dev.firebaseio.com",
+        "projectId": "lahejo-dev",
+        "storageBucket": "lahejo-dev.appspot.com",
+        "messagingSenderId": "781851522642",
+        "appId": "1:781851522642:web:38fef9f08c59cd4c50518b",
+        "measurementId": "G-KN8WMJW77G"
+      }
     }
   }
 }
