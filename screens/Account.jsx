@@ -11,31 +11,16 @@ import {
 } from "react-native";
 import firebase from "firebase";
 
+import useAuth from "../hooks/useAuth";
+
 import { HeaderText, BodyText } from "../components/Text";
 
 const AccountScreen = () => {
-  const { navigate } = useNavigation();
+  const { currentUser } = useAuth();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <HeaderText>Account</HeaderText>
-          <Avatar />
-        </View>
-        <View style={{ marginVertical: 25 }} />
-        <Menu
-          title="Personal information"
-          icon={require("../assets/images/user-light.png")}
-          onTap={() => navigate("edit-personal-info")}
-        />
-        <Menu
-          title="Shipping Address"
-          icon={require("../assets/images/package.png")}
-          onTap={() => navigate("shipping-address")}
-        />
-        <Menu title="Log out" onTap={() => firebase.auth().signOut()} />
-      </View>
+      {currentUser ? <AuthenticatedView /> : <AnonymousView />}
     </SafeAreaView>
   );
 };
@@ -62,6 +47,48 @@ const Menu = ({ title, icon, onTap }) => {
       <BodyText>{title}</BodyText>
       <Image source={icon} style={styles.icon} />
     </TouchableOpacity>
+  );
+};
+
+const AuthenticatedView = () => {
+  const { navigate } = useNavigation();
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <HeaderText>Account</HeaderText>
+        <Avatar />
+      </View>
+      <View style={{ marginVertical: 25 }} />
+      <Menu
+        title="Personal information"
+        icon={require("../assets/images/user-light.png")}
+        onTap={() => navigate("edit-personal-info")}
+      />
+      <Menu
+        title="Shipping Address"
+        icon={require("../assets/images/package.png")}
+        onTap={() => navigate("shipping-address")}
+      />
+      <Menu title="Log out" onTap={() => firebase.auth().signOut()} />
+    </View>
+  );
+};
+
+const AnonymousView = () => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <HeaderText>Account</HeaderText>
+      </View>
+      <View style={{ marginVertical: 25 }} />
+      <Menu
+        title="Log in"
+        icon={require("../assets/images/user-light.png")}
+        onTap={() => navigate("edit-personal-info")}
+      />
+      <Menu title="Register" onTap={() => firebase.auth().signOut()} />
+    </View>
   );
 };
 

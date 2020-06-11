@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import * as Google from "expo-google-app-auth";
@@ -6,6 +7,8 @@ import firebase from "firebase";
 import { BodyText } from "./Text";
 
 const OAuthButton = ({ google }) => {
+  const { navigate } = useNavigation();
+
   const isUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
       var providerData = firebaseUser.providerData;
@@ -68,6 +71,7 @@ const OAuthButton = ({ google }) => {
       });
 
       if (result.type === "success") {
+        navigate("splash");
         onSignInGoogle(result);
         return result.accessToken;
       } else {
