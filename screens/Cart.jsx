@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     paddingHorizontal: 25,
     paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
-    paddingBottom: Platform.OS == "android" && 55,
+    paddingBottom: Platform.OS == "android" ? 55 : 0,
   },
   cartItemContainer: {
     flexDirection: "row",
