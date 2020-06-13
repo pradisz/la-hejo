@@ -23,8 +23,8 @@ const Button = ({
       style={[
         btnStyle,
         styles.container,
-        primary && { backgroundColor: "#EE6457" },
-        secondary && { backgroundColor: "#008576" },
+        primary && { backgroundColor: "#008576" },
+        secondary && { backgroundColor: "#EE6457" },
         accent && { backgroundColor: "#F7D57B" },
       ]}
     >

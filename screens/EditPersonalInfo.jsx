@@ -10,11 +10,15 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { useAuth } from "../hooks/useAuth";
+
 import { HeaderText, BodyText } from "../components/Text";
 import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 
 const EditPersonalInfoScreen = () => {
+  const { currentUser } = useAuth();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
@@ -29,13 +33,17 @@ const EditPersonalInfoScreen = () => {
             Edit personal info
           </HeaderText>
           <View style={{ marginVertical: 15 }} />
-          <AvatarForm onTap={() => {}} />
+          <AvatarForm />
           <View style={{ marginVertical: 25, paddingHorizontal: 25 }}>
             <BodyText bold>Display name</BodyText>
-            <TextInput maxLength={25} />
+            <TextInput maxLength={25} value={currentUser.displayName} />
             <View style={{ marginVertical: 15 }} />
-            <BodyText bold>Email adress</BodyText>
-            <TextInput keyboardType="email-address" maxLength={25} />
+            <BodyText bold>Email address</BodyText>
+            <TextInput
+              keyboardType="email-address"
+              maxLength={25}
+              value={currentUser.email}
+            />
             <View style={{ marginVertical: 15 }} />
             <BodyText bold>Phone number</BodyText>
             <TextInput keyboardType="phone-pad" maxLength={15} />
@@ -46,20 +54,18 @@ const EditPersonalInfoScreen = () => {
   );
 };
 
-const AvatarForm = ({ image, onTap }) => {
+const AvatarForm = () => {
+  const { currentUser } = useAuth();
+
+  const handleForm = () => {};
+
   return (
-    <TouchableOpacity onPress={onTap} activeOpacity={0.5} style={styles.avatarContainer}>
-      <Image
-        source={
-          image
-            ? { uri: image }
-            : {
-                uri:
-                  "https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
-              }
-        }
-        style={styles.avatar}
-      />
+    <TouchableOpacity
+      onPress={handleForm}
+      activeOpacity={0.5}
+      style={styles.avatarContainer}
+    >
+      <Image source={{ uri: currentUser.photoURL }} style={styles.avatar} />
       <View style={{ marginVertical: 5 }} />
       <BodyText>Tap to change photo</BodyText>
     </TouchableOpacity>
