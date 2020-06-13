@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-native";
 
-import useProducts from "../hooks/useProducts";
+import { useProducts } from "../hooks/useProducts";
 
 import { BodyText, PriceText } from "../components/Text";
 import Header from "../components/Header";
@@ -38,18 +38,18 @@ const HomeScreen = () => {
 };
 
 const PlantItem = ({ plant }) => {
-  const { title, image, price } = plant;
+  const { productId, name, thumbnail, price } = plant;
   const { navigate } = useNavigation();
 
   return (
     <TouchableOpacity
-      onPress={() => navigate("plants", { plant: plant })}
+      onPress={() => navigate("plants", { productId })}
       style={{ flex: 1 / 2, paddingHorizontal: 8 }}
     >
       <View>
-        <Image source={{ uri: image }} style={styles.thumbnail} />
+        <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
         <View style={{ marginVertical: 5 }} />
-        <BodyText bold>{title}</BodyText>
+        <BodyText bold>{name}</BodyText>
         <PriceText value={price} />
       </View>
     </TouchableOpacity>

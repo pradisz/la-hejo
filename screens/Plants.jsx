@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { useProduct } from "../hooks/useProducts";
+
 import { HeaderText, BodyText, PriceText } from "../components/Text";
 import Header from "../components/Header";
 import CartIcon from "../components/CartIcon";
@@ -18,43 +20,34 @@ import Button from "../components/Button";
 
 const PlantsScreen = () => {
   const route = useRoute();
-  const {
-    id,
-    title,
-    image,
-    price,
-    lighting,
-    watering,
-    temperature,
-    size,
-    description,
-  } = route.params.plant;
+  const { product } = useProduct(route.params.productId);
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
         <Header showBack showCart style={{ paddingHorizontal: 25 }} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeaderText size={32} style={{ paddingHorizontal: 25 }}>
-            {title}
+            {product?.name}
           </HeaderText>
           <TopDetail
-            image={image}
-            lighting={lighting}
-            watering={watering}
-            temperature={temperature}
+            thumbnail={product?.thumbnail}
+            lighting={product?.lighting}
+            watering={product?.watering}
+            temperature={product?.temperature}
           />
-          <MidDetail size={size} />
+          <MidDetail size={product?.size} />
           <BodyText style={{ padding: 25, lineHeight: 25 }}>
-            {description}
+            {product?.description}
           </BodyText>
         </ScrollView>
-        <Footer price={price} />
+        <Footer price={product?.price} />
       </View>
     </SafeAreaView>
   );
 };
 
-const TopDetail = ({ image, lighting, watering, temperature }) => {
+const TopDetail = ({ thumbnail, lighting, watering, temperature }) => {
   return (
     <View style={styles.topDetailContainer}>
       <View style={styles.careOverview}>
@@ -65,10 +58,10 @@ const TopDetail = ({ image, lighting, watering, temperature }) => {
         <BodyText>{watering}</BodyText>
         <View style={{ marginVertical: 10 }} />
         <BodyText bold>Temperature</BodyText>
-        <BodyText>{temperature}</BodyText>
+        <BodyText>{temperature}°C</BodyText>
       </View>
       <TouchableOpacity activeOpacity={0.5} onPress={() => {}}>
-        <Image source={{ uri: image }} style={styles.plantImage} />
+        <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
       </TouchableOpacity>
     </View>
   );
@@ -84,7 +77,7 @@ const MidDetail = ({ size }) => {
       <View style={styles.cardContainer}>
         <BodyText bold>Size</BodyText>
         <BodyText>
-          {size} <BodyText size={14}>inch</BodyText>
+          {size}" <BodyText size={14}>inch</BodyText>
         </BodyText>
       </View>
       <View style={styles.cardContainer}>
@@ -123,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFF",
     paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
-    paddingBottom: Platform.OS == "android" && 55,
+    paddingBottom: Platform.OS == "android" ? 55 : 0,
   },
   topDetailContainer: {
     flex: 1,
@@ -137,7 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 15,
   },
-  plantImage: {
+  thumbnail: {
     width: 150,
     height: 200,
     borderRadius: 15,
