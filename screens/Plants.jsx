@@ -106,7 +106,7 @@ const Footer = ({ price }) => {
         <View style={{ marginHorizontal: 10 }} />
         <Button
           title="Buy Now"
-          secondary
+          primary
           btnStyle={{ borderTopEndRadius: 0, borderBottomEndRadius: 0 }}
           icon={require("../assets/images/arrow-right.png")}
           iconEnd
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFF",
     paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
+    paddingBottom: Platform.OS == "android" && 55,
   },
   topDetailContainer: {
     flex: 1,

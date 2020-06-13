@@ -9,11 +9,11 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import firebase from "firebase";
 
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 import { HeaderText, BodyText } from "../components/Text";
+import Button from "../components/Button";
 
 const AccountScreen = () => {
   const { currentUser } = useAuth();
@@ -25,17 +25,16 @@ const AccountScreen = () => {
   );
 };
 
-const Avatar = ({ image }) => {
+const Avatar = () => {
+  const { currentUser } = useAuth();
+
   return (
     <Image
-      source={
-        image
-          ? { uri: image }
-          : {
-              uri:
-                "https://images.unsplash.com/photo-1491349174775-aaafddd81942?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
-            }
-      }
+      source={{
+        uri: currentUser.photoURL
+          ? currentUser.photoURL
+          : "https://avatars3.githubusercontent.com/u/44938931?s=460&u=d386991175dac33d37cfef5ada23e67d643469e4&v=4",
+      }}
       style={styles.avatar}
     />
   );
@@ -52,6 +51,7 @@ const Menu = ({ title, icon, onTap }) => {
 
 const AuthenticatedView = () => {
   const { navigate } = useNavigation();
+  const { signOut } = useAuth();
 
   return (
     <View style={styles.container}>
@@ -70,24 +70,30 @@ const AuthenticatedView = () => {
         icon={require("../assets/images/package.png")}
         onTap={() => navigate("shipping-address")}
       />
-      <Menu title="Log out" onTap={() => firebase.auth().signOut()} />
+      <Menu title="Log out" onTap={signOut} />
     </View>
   );
 };
 
 const AnonymousView = () => {
+  const { navigate } = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <HeaderText>Account</HeaderText>
       </View>
       <View style={{ marginVertical: 25 }} />
-      <Menu
-        title="Log in"
-        icon={require("../assets/images/user-light.png")}
-        onTap={() => navigate("edit-personal-info")}
-      />
-      <Menu title="Register" onTap={() => firebase.auth().signOut()} />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Image
+          source={require("../assets/images/humaaans-plants.png")}
+          style={{ width: 250, height: 250 }}
+          resizeMode="contain"
+        />
+      </View>
+      <View style={{ marginVertical: 25 }} />
+      <Button title="Log in" onPress={() => navigate("login")} primary />
+      <View style={{ marginVertical: 25 }} />
     </View>
   );
 };

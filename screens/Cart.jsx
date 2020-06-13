@@ -88,8 +88,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFF",
-    paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
     paddingHorizontal: 25,
+    paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
+    paddingBottom: Platform.OS == "android" && 55,
   },
   cartItemContainer: {
     flexDirection: "row",
