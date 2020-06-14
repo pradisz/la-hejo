@@ -30,11 +30,9 @@ const Button = ({
     >
       {iconStart && <Image source={icon} />}
       <BodyText
-        bold
         size={textSize}
         inverted={inverted ? false : true}
         style={{
-          textTransform: "uppercase",
           bottom: 2,
         }}
       >

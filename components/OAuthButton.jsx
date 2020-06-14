@@ -6,11 +6,11 @@ import { useAuth } from "../hooks/useAuth";
 import { BodyText } from "./Text";
 
 const OAuthButton = ({ google }) => {
-  const { signInAsyncGoogle } = useAuth();
+  const { signInWithGoogle } = useAuth();
 
   return (
     <TouchableOpacity
-      onPress={google && signInAsyncGoogle}
+      onPress={google && signInWithGoogle}
       style={styles.container}
     >
       <View style={{ marginHorizontal: 15 }} />

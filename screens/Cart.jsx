@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   Platform,
@@ -7,53 +8,81 @@ import {
   View,
   FlatList,
   Image,
+  TouchableOpacity,
 } from "react-native";
+
+import { useCart } from "../hooks/useCart";
 
 import { BodyText, PriceText } from "../components/Text";
 import Header from "../components/Header";
+import Counter from "../components/Counter";
 import Button from "../components/Button";
 
-const initialData = [
-  {
-    id: "1",
-    title: "Yucca",
-    image:
-      "https://i.pinimg.com/564x/fc/12/4b/fc124b9da4b20d092d30d79642afe196.jpg",
-    price: 35,
-    quantity: 1,
-  },
-];
-
 const CartScreen = () => {
+  const { cartItems, cartItemsCount, cartTotal } = useCart();
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
         <Header title="Cart" showBack />
-        <FlatList
-          data={initialData}
-          renderItem={({ item }) => <CartItem item={item} />}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ paddingBottom: 25 }}
-          showsVerticalScrollIndicator={false}
-        />
-        <Footer total={35} />
+        {cartItemsCount !== 0 ? (
+          <>
+            <FlatList
+              data={cartItems}
+              renderItem={({ item }) => <CartItem item={item} />}
+              keyExtractor={(item) => item.productId}
+              contentContainerStyle={{ paddingTop: 15, paddingBottom: 25 }}
+              showsVerticalScrollIndicator={false}
+            />
+            <Footer total={cartTotal} />
+          </>
+        ) : (
+          <>
+            <View style={styles.emptyContainer}>
+              <Image
+                source={require("../assets/images/marginalia-online-shopping.png")}
+                style={{ width: 225, height: 220 }}
+              />
+              <BodyText>Your cart is currently empty</BodyText>
+            </View>
+            <Button
+              title="Shop Plants"
+              onPress={() => navigation.goBack()}
+              primary
+            />
+          </>
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
 const CartItem = ({ item }) => {
-  const { id, title, image, price, quantity } = item;
+  const { addItem, removeItem } = useCart();
+  const { productId, name, thumbnail, price, quantity } = item;
+  const { navigate } = useNavigation();
+
   return (
-    <View style={styles.cartItemContainer}>
-      <Image source={{ uri: image }} style={styles.thumbnail} />
+    <TouchableOpacity
+      onPress={() => navigate("plants", { productId })}
+      style={styles.cartItemContainer}
+    >
+      <Image source={{ uri: thumbnail }} style={styles.thumbnail} />
       <View style={{ marginHorizontal: 7.5 }} />
-      <View>
-        <BodyText bold>{title}</BodyText>
+      <View style={{ flex: 1 }}>
+        <BodyText bold>{name}</BodyText>
         <View style={{ marginVertical: 2 }} />
-        <PriceText value={price} />
+        <View style={styles.cartItemQuantity}>
+          <PriceText value={price} />
+          <Counter
+            value={quantity}
+            onIncrement={() => addItem(item)}
+            onDecrement={() => removeItem(item)}
+          />
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -90,11 +119,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     paddingHorizontal: 25,
     paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight + 15,
-    paddingBottom: Platform.OS == "android" ? 55 : 0,
+    paddingBottom: Platform.OS == "android" ? 55 : 25,
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   cartItemContainer: {
     flexDirection: "row",
     marginVertical: 10,
+  },
+  cartItemQuantity: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   thumbnail: {
     width: 80,

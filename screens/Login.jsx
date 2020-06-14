@@ -29,7 +29,7 @@ const LoginScreen = () => {
           <BodyText bold>Phone number</BodyText>
           <TextInput keyboardType="phone-pad" maxLength={15} />
           <View style={{ marginVertical: 15 }} />
-          <Button title="Log in" onPress={() => navigate("home")} primary />
+          <Button title="Log in" onPress={() => {}} primary />
           <View style={{ marginVertical: 15 }} />
           <BodyText bold center>
             OR

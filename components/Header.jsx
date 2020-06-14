@@ -24,7 +24,7 @@ const Header = ({ title, style, showBack, showCart, showSave, onSave }) => {
           {title}
         </HeaderText>
       )}
-      {showCart && <CartIcon count={1} />}
+      {showCart && <CartIcon />}
       {showSave && <SaveButton onPress={onSave} />}
     </View>
   );

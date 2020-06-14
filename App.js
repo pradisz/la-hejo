@@ -3,6 +3,7 @@ import { Platform, StatusBar } from "react-native";
 
 import useCachedResources from "./hooks/useCachedResources";
 import { AuthProvider } from "./hooks/useAuth";
+import { CartProvider } from "./hooks/useCart";
 
 import AppNavigation from "./navigation/AppNavigation";
 
@@ -19,7 +20,9 @@ const App = () => {
       <>
         {Platform.OS === "ios" && <StatusBar barStyle="dark-content" />}
         <AuthProvider>
-          <AppNavigation />
+          <CartProvider>
+            <AppNavigation />
+          </CartProvider>
         </AuthProvider>
       </>
     );
