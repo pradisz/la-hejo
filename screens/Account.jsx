@@ -86,13 +86,11 @@ const AnonymousView = () => {
       <View style={{ marginVertical: 25 }} />
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Image
-          source={require("../assets/images/humaaans-plants.png")}
-          style={{ width: 250, height: 250 }}
-          resizeMode="contain"
+          source={require("../assets/images/vector-collages-taking-care-of-flowers.png")}
+          style={{ width: 225, height: 219.94 }}
         />
       </View>
-      <View style={{ marginVertical: 25 }} />
-      <Button title="Log in" onPress={() => navigate("login")} primary />
+      <Button title="Get Started" onPress={() => navigate("login")} primary />
       <View style={{ marginVertical: 25 }} />
     </View>
   );

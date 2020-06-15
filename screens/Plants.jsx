@@ -12,6 +12,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 
 import { useProduct } from "../hooks/useProducts";
+import { useCart } from "../hooks/useCart";
 
 import { HeaderText, BodyText, PriceText } from "../components/Text";
 import Header from "../components/Header";
@@ -21,6 +22,7 @@ import Button from "../components/Button";
 const PlantsScreen = () => {
   const route = useRoute();
   const { product } = useProduct(route.params.productId);
+  const { addItem } = useCart();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
@@ -41,7 +43,7 @@ const PlantsScreen = () => {
             {product?.description}
           </BodyText>
         </ScrollView>
-        <Footer price={product?.price} />
+        <Footer price={product?.price} onAddItem={() => addItem(product)} />
       </View>
     </SafeAreaView>
   );
@@ -90,12 +92,12 @@ const MidDetail = ({ size }) => {
   );
 };
 
-const Footer = ({ price }) => {
+const Footer = ({ price, onAddItem }) => {
   return (
     <View style={styles.footerContainer}>
       <PriceText value={price} size={32} />
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <CartIcon bgColor="#B6DDDA" />
+        <CartIcon onPress={onAddItem} />
         <View style={{ marginHorizontal: 10 }} />
         <Button
           title="Buy Now"

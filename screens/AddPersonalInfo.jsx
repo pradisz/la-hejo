@@ -34,11 +34,11 @@ const AddPersonalInfoScreen = () => {
           <TextInput keyboardType="phone-pad" maxLength={15} />
           <View style={{ marginVertical: 15 }} />
           <View
-            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 15 }}
+            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 25 }}
           >
             <Button
               title="Continue"
-              onPress={() => navigation.navigate("root")}
+              onPress={() => {}}
               primary
             />
           </View>

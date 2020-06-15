@@ -2,16 +2,16 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import * as Google from "expo-google-app-auth";
 import firebase from "../firebase";
 
-const authContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const auth = useProvideAuth();
 
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
-  return useContext(authContext);
+  return useContext(AuthContext);
 };
 
 const useProvideAuth = () => {
@@ -94,7 +94,7 @@ const useProvideAuth = () => {
     });
   };
 
-  const signInAsyncGoogle = async () => {
+  const signInWithGoogle = async () => {
     try {
       const result = await Google.logInAsync({
         androidClientId:
@@ -137,7 +137,7 @@ const useProvideAuth = () => {
   return {
     currentUser,
     isLoading,
-    signInAsyncGoogle,
+    signInWithGoogle,
     signOut,
   };
 };

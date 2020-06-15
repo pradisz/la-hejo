@@ -42,7 +42,7 @@ const VerifyOTPScreen = () => {
           <TextLink title="Didn't get a text? Resend code" onPress={() => {}} />
           <View style={{ marginVertical: 15 }} />
           <View
-            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 15 }}
+            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 25 }}
           >
             <Button
               title="Continue"
