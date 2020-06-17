@@ -8,7 +8,7 @@ const SplashScreen = () => {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        background: "#FFF",
+        backgroundColor: "#FFF",
       }}
     >
       <Image
