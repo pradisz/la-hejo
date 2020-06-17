@@ -31,9 +31,9 @@ export const useProduct = (productId) => {
       .firestore()
       .collection("products")
       .doc(productId)
-      .onSnapshot((documentSnapshot) => {
-        if (documentSnapshot.exists) {
-          const updatedProduct = documentSnapshot.data();
+      .onSnapshot((doc) => {
+        if (doc.exists) {
+          const updatedProduct = doc.data();
           setProduct(updatedProduct);
         }
       });
