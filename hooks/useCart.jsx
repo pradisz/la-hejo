@@ -80,7 +80,6 @@ export const CartProvider = ({ children }) => {
 
       // Start fetch data from db whenever cart items is null
       if (!cartItems.length) {
-        Promise.all()
         fetchData();
       }
 
@@ -126,21 +125,7 @@ export const CartProvider = ({ children }) => {
 };
 
 export const useCart = () => {
-  const {
-    cartItems,
-    addItem,
-    removeItem,
-    cartItemsCount,
-    cartTotal,
-  } = useContext(CartContext);
-
-  return {
-    cartItems,
-    addItem,
-    removeItem,
-    cartItemsCount,
-    cartTotal,
-  };
+  return useContext(CartContext);
 };
 
 const usePrevious = (value) => {
