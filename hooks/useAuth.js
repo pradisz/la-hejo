@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import * as Google from "expo-google-app-auth";
 import firebase from "../firebase";
+import { auth } from "firebase";
 
 const AuthContext = createContext();
 
@@ -118,6 +119,28 @@ const useProvideAuth = () => {
     }
   };
 
+  const editProfile = (profile) => {
+    return firebase
+      .auth()
+      .currentUser.updateProfile(profile)
+      .then(() =>
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(currentUser.uid)
+          .set(profile, { merge: true })
+          .then(() => {
+            console.log("Update profile successfully!");
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      )
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const signOut = async () => {
     setLoading(true);
     setTimeout(async () => {
@@ -138,6 +161,7 @@ const useProvideAuth = () => {
     currentUser,
     isLoading,
     signInWithGoogle,
+    editProfile,
     signOut,
   };
 };
