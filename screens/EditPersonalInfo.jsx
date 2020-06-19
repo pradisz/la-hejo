@@ -42,17 +42,19 @@ const EditPersonalInfoScreen = () => {
     }
   };
 
+  const handleOnSave = async () => {
+    setLoading(true);
+    await editProfile(displayName, avatarPreview);
+    setLoading(false);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
         <Header
           showBack
           showSave={isLoading ? false : true}
-          onSave={async () => {
-            setLoading(true);
-            await editProfile(displayName, avatarPreview);
-            setLoading(false);
-          }}
+          onSave={handleOnSave}
           style={{ paddingHorizontal: 25 }}
         />
         <ScrollView showsVerticalScrollIndicator={false}>
