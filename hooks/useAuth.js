@@ -18,6 +18,7 @@ export const useAuth = () => {
 const useProvideAuth = () => {
   const [currentUser, setUser] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const [isUpdating, setUpdating] = useState(false);
 
   const isGoogleUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
@@ -119,26 +120,79 @@ const useProvideAuth = () => {
     }
   };
 
-  const editProfile = (profile) => {
-    return firebase
-      .auth()
-      .currentUser.updateProfile(profile)
-      .then(() =>
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(currentUser.uid)
-          .set(profile, { merge: true })
+  const editProfile = async (displayName, image) => {
+    const userAuth = firebase.auth().currentUser;
+    const usersRef = firebase
+      .firestore()
+      .collection("users")
+      .doc(currentUser.uid);
+
+    setUpdating(true);
+    if (image) {
+      return uploadImageAsync(image).then((photoURL) => {
+        return userAuth
+          .updateProfile({ displayName, photoURL })
           .then(() => {
-            console.log("Update profile successfully!");
+            usersRef
+              .set({ displayName, photoURL }, { merge: true })
+              .then(() => {
+                console.log("Update profile successfully!");
+                setUpdating(false);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
           })
           .catch((error) => {
             console.error(error);
-          })
-      )
-      .catch((error) => {
-        console.error(error);
+          });
       });
+    } else {
+      return userAuth
+        .updateProfile({ displayName })
+        .then(() => {
+          usersRef
+            .set({ displayName }, { merge: true })
+            .then(() => {
+              console.log("Update profile successfully!");
+              setUpdating(false);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  };
+
+  const uploadImageAsync = async (uri) => {
+    // Why are we using XMLHttpRequest? See:
+    // https://github.com/expo/expo/issues/2402#issuecomment-443726662
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+
+    const path = `users/${new Date().getTime()}_${currentUser.uid}`;
+
+    const ref = firebase.storage().ref(path);
+    const snapshot = await ref.put(blob);
+
+    // We're done with the blob, close and release it
+    blob.close();
+
+    return await snapshot.ref.getDownloadURL();
   };
 
   const signOut = async () => {
@@ -155,11 +209,12 @@ const useProvideAuth = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   return {
     currentUser,
     isLoading,
+    isUpdating,
     signInWithGoogle,
     editProfile,
     signOut,

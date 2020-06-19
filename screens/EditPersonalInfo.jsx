@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+import React, { useState, useEffect } from "react";
 import {
   Platform,
   StatusBar,
@@ -19,8 +21,26 @@ import TextInput from "../components/TextInput";
 
 const EditPersonalInfoScreen = () => {
   const { currentUser, editProfile } = useAuth();
+  const [avatarPreview, setAvatarPreview] = useState(null);
   const [displayName, setDisplayName] = useState(currentUser.displayName);
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    })();
+  }, [avatarPreview]);
+
+  const pickImage = async () => {
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!pickerResult.cancelled) {
+      setAvatarPreview(pickerResult.uri);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
@@ -30,7 +50,7 @@ const EditPersonalInfoScreen = () => {
           showSave={isLoading ? false : true}
           onSave={async () => {
             setLoading(true);
-            await editProfile({ displayName });
+            await editProfile(displayName, avatarPreview);
             setLoading(false);
           }}
           style={{ paddingHorizontal: 25 }}
@@ -44,7 +64,7 @@ const EditPersonalInfoScreen = () => {
             <ActivityIndicator size="large" />
           ) : (
             <>
-              <AvatarForm />
+              <AvatarForm onPress={pickImage} previewImage={avatarPreview} />
               <View style={{ marginVertical: 25, paddingHorizontal: 25 }}>
                 <BodyText bold>Display name</BodyText>
                 <TextInput
@@ -80,18 +100,19 @@ const EditPersonalInfoScreen = () => {
   );
 };
 
-const AvatarForm = () => {
+const AvatarForm = ({ onPress, previewImage }) => {
   const { currentUser } = useAuth();
-
-  const handleForm = () => {};
 
   return (
     <TouchableOpacity
-      onPress={handleForm}
+      onPress={onPress}
       activeOpacity={0.5}
       style={styles.avatarContainer}
     >
-      <Image source={{ uri: currentUser.photoURL }} style={styles.avatar} />
+      <Image
+        source={{ uri: previewImage ? previewImage : currentUser.photoURL }}
+        style={styles.avatar}
+      />
       <View style={{ marginVertical: 5 }} />
       <BodyText>Tap to change photo</BodyText>
     </TouchableOpacity>

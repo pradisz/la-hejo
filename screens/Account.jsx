@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Platform,
   StatusBar,
@@ -26,7 +26,9 @@ const AccountScreen = () => {
 };
 
 const Avatar = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, isUpdating } = useAuth();
+
+  useEffect(() => {}, [isUpdating]);
 
   return (
     <Image
