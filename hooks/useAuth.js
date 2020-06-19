@@ -120,7 +120,7 @@ const useProvideAuth = () => {
     }
   };
 
-  const editProfile = async (displayName, image) => {
+  const editProfile = (displayName, image) => {
     const userAuth = firebase.auth().currentUser;
     const usersRef = firebase
       .firestore()
@@ -135,17 +135,10 @@ const useProvideAuth = () => {
           .then(() => {
             usersRef
               .set({ displayName, photoURL }, { merge: true })
-              .then(() => {
-                console.log("Update profile successfully!");
-                setUpdating(false);
-              })
-              .catch((error) => {
-                console.error(error);
-              });
+              .then(() => console.log("Profile updated successfully!"))
+              .catch((error) => console.error(error));
           })
-          .catch((error) => {
-            console.error(error);
-          });
+          .catch((error) => console.error(error));
       });
     } else {
       return userAuth
@@ -154,16 +147,12 @@ const useProvideAuth = () => {
           usersRef
             .set({ displayName }, { merge: true })
             .then(() => {
-              console.log("Update profile successfully!");
+              console.log("Profile updated successfully!");
               setUpdating(false);
             })
-            .catch((error) => {
-              console.error(error);
-            });
+            .catch((error) => console.error(error));
         })
-        .catch((error) => {
-          console.error(error);
-        });
+        .catch((error) => console.error(error));
     }
   };
 

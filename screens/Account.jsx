@@ -68,7 +68,7 @@ const AuthenticatedView = () => {
         onTap={() => navigate("edit-personal-info")}
       />
       <Menu
-        title="Shipping Address"
+        title="Shipping address"
         icon={require("../assets/images/package.png")}
         onTap={() => navigate("shipping-address")}
       />
