@@ -1,4 +1,6 @@
-import React from "react";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+import React, { useState, useEffect } from "react";
 import {
   Platform,
   StatusBar,
@@ -7,6 +9,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -17,15 +20,39 @@ import Header from "../components/Header";
 import TextInput from "../components/TextInput";
 
 const EditPersonalInfoScreen = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, editProfile } = useAuth();
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [displayName, setDisplayName] = useState(currentUser.displayName);
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    })();
+  }, [avatarPreview]);
+
+  const pickImage = async () => {
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!pickerResult.cancelled) {
+      setAvatarPreview(pickerResult.uri);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
         <Header
           showBack
-          showSave
-          onSave={() => {}}
+          showSave={isLoading ? false : true}
+          onSave={async () => {
+            setLoading(true);
+            await editProfile(displayName, avatarPreview);
+            setLoading(false);
+          }}
           style={{ paddingHorizontal: 25 }}
         />
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -33,39 +60,59 @@ const EditPersonalInfoScreen = () => {
             Edit personal info
           </HeaderText>
           <View style={{ marginVertical: 15 }} />
-          <AvatarForm />
-          <View style={{ marginVertical: 25, paddingHorizontal: 25 }}>
-            <BodyText bold>Display name</BodyText>
-            <TextInput maxLength={25} value={currentUser.displayName} />
-            <View style={{ marginVertical: 15 }} />
-            <BodyText bold>Email address</BodyText>
-            <TextInput
-              keyboardType="email-address"
-              maxLength={25}
-              value={currentUser.email}
-            />
-            <View style={{ marginVertical: 15 }} />
-            <BodyText bold>Phone number</BodyText>
-            <TextInput keyboardType="phone-pad" maxLength={15} />
-          </View>
+          {isLoading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <AvatarForm onPress={pickImage} previewImage={avatarPreview} />
+              <View style={{ marginVertical: 25, paddingHorizontal: 25 }}>
+                <BodyText bold>Display name</BodyText>
+                <TextInput
+                  maxLength={25}
+                  onChangeText={(value) => setDisplayName(value)}
+                  value={displayName}
+                />
+                <View style={{ marginVertical: 15 }} />
+                <TouchableOpacity onPress={() => {}}>
+                  <BodyText bold>Email address</BodyText>
+                  <TextInput
+                    keyboardType="email-address"
+                    maxLength={25}
+                    value={currentUser.email}
+                    editable={false}
+                  />
+                </TouchableOpacity>
+                <View style={{ marginVertical: 15 }} />
+                <TouchableOpacity onPress={() => {}}>
+                  <BodyText bold>Phone number</BodyText>
+                  <TextInput
+                    keyboardType="phone-pad"
+                    maxLength={15}
+                    editable={false}
+                  />
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
   );
 };
 
-const AvatarForm = () => {
+const AvatarForm = ({ onPress, previewImage }) => {
   const { currentUser } = useAuth();
-
-  const handleForm = () => {};
 
   return (
     <TouchableOpacity
-      onPress={handleForm}
+      onPress={onPress}
       activeOpacity={0.5}
       style={styles.avatarContainer}
     >
-      <Image source={{ uri: currentUser.photoURL }} style={styles.avatar} />
+      <Image
+        source={{ uri: previewImage ? previewImage : currentUser.photoURL }}
+        style={styles.avatar}
+      />
       <View style={{ marginVertical: 5 }} />
       <BodyText>Tap to change photo</BodyText>
     </TouchableOpacity>
