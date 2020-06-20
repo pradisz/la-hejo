@@ -66,7 +66,7 @@ const useProvideAuth = () => {
                   displayName,
                   email,
                   photoURL,
-                  date_joined: Date.now(),
+                  dateJoined: Date.now(),
                 })
                 .then(() => {
                   console.log("Document successfully written!");
@@ -76,7 +76,7 @@ const useProvideAuth = () => {
                 });
             } else {
               userRef.doc(uid).update({
-                last_login: Date.now(),
+                lastLogin: Date.now(),
               });
             }
           })
