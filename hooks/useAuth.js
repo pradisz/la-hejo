@@ -19,6 +19,80 @@ const useProvideAuth = () => {
   const [currentUser, setUser] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [isUpdating, setUpdating] = useState(false);
+  const [verificationId, setVerificationId] = useState("");
+
+  const sendVerificationCode = (phoneNumber, recaptchaVerifier) => {
+    const phoneProvider = new firebase.auth.PhoneAuthProvider();
+    return phoneProvider
+      .verifyPhoneNumber(phoneNumber, recaptchaVerifier)
+      .then((verificationId) => setVerificationId(verificationId))
+      .catch((error) => {
+        throw error;
+      });
+  };
+
+  const confirmVerificationCode = (verificationCode) => {
+    const credential = firebase.auth.PhoneAuthProvider.credential(
+      verificationId,
+      verificationCode
+    );
+
+    return firebase
+      .auth()
+      .signInWithCredential(credential)
+      .then((result) => {
+        const { isNewUser } = result.additionalUserInfo;
+        console.log("Phone number verified.");
+        return isNewUser;
+      })
+      .catch((error) => {
+        throw error;
+      });
+  };
+
+  const addProfile = async (displayName, email) => {
+    const userAuth = firebase.auth().currentUser;
+    const usersRef = firebase
+      .firestore()
+      .collection("users")
+      .doc(currentUser.uid);
+    const statsRef = firebase.firestore().collection("stats").doc("users");
+    const increment = firebase.firestore.FieldValue.increment(1);
+
+    await userAuth.updateProfile({ displayName }).catch((error) => {
+      console.error(error);
+      throw error;
+    });
+    await userAuth.updateEmail(email).catch((error) => {
+      console.error(error);
+      throw error;
+    });
+    await usersRef
+      .set(
+        {
+          uid: userAuth.uid,
+          displayName,
+          email,
+          phoneNumber: userAuth.phoneNumber,
+          dateJoined: Date.now(),
+          lastLogin: Date.now(),
+        },
+        { merge: true }
+      )
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+    return statsRef
+      .update({ userCount: increment })
+      .then(() => {
+        console.log("Profile added successfully!");
+      })
+      .catch((error) => {
+        console.error(error);
+        throw error;
+      });
+  };
 
   const isGoogleUserEqual = (googleUser, firebaseUser) => {
     if (firebaseUser) {
@@ -67,6 +141,7 @@ const useProvideAuth = () => {
                   email,
                   photoURL,
                   dateJoined: Date.now(),
+                  lastLogin: Date.now(),
                 })
                 .then(() => {
                   console.log("Document successfully written!");
@@ -204,6 +279,10 @@ const useProvideAuth = () => {
     currentUser,
     isLoading,
     isUpdating,
+    sendVerificationCode,
+    verificationId,
+    addProfile,
+    confirmVerificationCode,
     signInWithGoogle,
     editProfile,
     signOut,

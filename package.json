@@ -20,6 +20,7 @@
     "expo": "~37.0.9",
     "expo-asset": "~8.1.0",
     "expo-constants": "~9.0.0",
+    "expo-firebase-recaptcha": "^1.1.0",
     "expo-font": "~8.1.0",
     "expo-google-app-auth": "^8.1.0",
     "expo-image-picker": "~8.1.0",
@@ -33,7 +34,8 @@
     "react-native-gesture-handler": "~1.6.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "react-native-webview": "8.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
