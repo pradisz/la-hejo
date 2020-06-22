@@ -6,8 +6,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import { useAuth } from "../hooks/useAuth";
 
 import SplashScreen from "../screens/Splash";
-import LoginScreen from "../screens/Login";
-import SignupScreen from "../screens/Signup";
+import AuthScreen from "../screens/Auth";
 import VerifyOTPScreen from "../screens/VerifyOTP";
 import AddPersonalInfoScreen from "../screens/AddPersonalInfo";
 import PlantsScreen from "../screens/Plants";
@@ -42,8 +41,8 @@ const AppNavigation = () => {
               name="shipping-address"
               component={ShippingAddressScreen}
             />
-            <Stack.Screen name="login" component={LoginScreen} />
-            <Stack.Screen name="signup" component={SignupScreen} />
+            <Stack.Screen name="login" component={AuthScreen} />
+            <Stack.Screen name="signup" component={AuthScreen} />
             <Stack.Screen name="verify-otp" component={VerifyOTPScreen} />
             <Stack.Screen
               name="add-personal-info"

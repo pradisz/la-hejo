@@ -44,7 +44,7 @@ const EditPersonalInfoScreen = () => {
 
   const handleOnSave = async () => {
     setLoading(true);
-    await editProfile(displayName, avatarPreview);
+    await editProfile(displayName, currentUser.email, avatarPreview);
     setLoading(false);
   };
 
@@ -90,6 +90,7 @@ const EditPersonalInfoScreen = () => {
                   <TextInput
                     keyboardType="phone-pad"
                     maxLength={15}
+                    value={currentUser.phoneNumber}
                     editable={false}
                   />
                 </TouchableOpacity>
@@ -112,7 +113,13 @@ const AvatarForm = ({ onPress, previewImage }) => {
       style={styles.avatarContainer}
     >
       <Image
-        source={{ uri: previewImage ? previewImage : currentUser.photoURL }}
+        source={{
+          uri: previewImage
+            ? previewImage
+            : currentUser.photoURL
+            ? currentUser.photoURL
+            : "https://avatars3.githubusercontent.com/u/44938931?s=460&u=d386991175dac33d37cfef5ada23e67d643469e4&v=4",
+        }}
         style={styles.avatar}
       />
       <View style={{ marginVertical: 5 }} />

@@ -1,13 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   Platform,
   StatusBar,
   SafeAreaView,
   StyleSheet,
   View,
+  ActivityIndicator,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+
+import { useAuth } from "../hooks/useAuth";
 
 import { HeaderText, BodyText } from "../components/Text";
 import Header from "../components/Header";
@@ -15,7 +18,18 @@ import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 
 const AddPersonalInfoScreen = () => {
-  const navigation = useNavigation();
+  const { addProfile } = useAuth();
+  const { navigate } = useNavigation();
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    await addProfile(displayName, email);
+    navigate("home");
+    setLoading(false);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFF" }}>
@@ -27,21 +41,37 @@ const AddPersonalInfoScreen = () => {
         >
           <HeaderText size={32}>Add personal info</HeaderText>
           <View style={{ marginVertical: 15 }} />
-          <BodyText bold>Display name</BodyText>
-          <TextInput maxLength={25} />
-          <View style={{ marginVertical: 15 }} />
-          <BodyText bold>Phone number</BodyText>
-          <TextInput keyboardType="phone-pad" maxLength={15} />
-          <View style={{ marginVertical: 15 }} />
-          <View
-            style={{ flex: 1, justifyContent: "flex-end", marginBottom: 25 }}
-          >
-            <Button
-              title="Continue"
-              onPress={() => {}}
-              primary
-            />
-          </View>
+          {isLoading ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <BodyText bold>Display name</BodyText>
+              <TextInput
+                autofocus
+                maxLength={25}
+                onChangeText={(value) => setDisplayName(value)}
+                value={displayName}
+              />
+              <View style={{ marginVertical: 15 }} />
+              <BodyText bold>Email address</BodyText>
+              <TextInput
+                keyboardType="email-address"
+                maxLength={25}
+                onChangeText={(value) => setEmail(value)}
+                value={email}
+              />
+              <View style={{ marginVertical: 15 }} />
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-end",
+                  marginBottom: 25,
+                }}
+              >
+                <Button title="Continue" onPress={handleSubmit} primary />
+              </View>
+            </>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
