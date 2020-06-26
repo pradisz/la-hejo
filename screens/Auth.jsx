@@ -76,7 +76,15 @@ const AuthScreen = () => {
                 value={phoneNumber}
               />
               <View style={{ marginVertical: 15 }} />
-              <Button title="Log in" onPress={handleSubmit} primary />
+              <Button
+                title={
+                  loginRoute
+                    ? "Log in"
+                    : "Sign up"
+                }
+                onPress={handleSubmit}
+                primary
+              />
               <View style={{ marginVertical: 15 }} />
               <BodyText bold center>
                 OR
