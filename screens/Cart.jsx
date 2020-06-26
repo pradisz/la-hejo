@@ -9,6 +9,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
 import { useCart } from "../hooks/useCart";
@@ -101,6 +102,7 @@ const Footer = ({ total }) => {
       </View>
       <Button
         title="Checkout"
+        onPress={() => Alert.alert("", "Not available yet.")}
         accent
         inverted
         btnStyle={{ borderTopEndRadius: 0, borderBottomEndRadius: 0 }}

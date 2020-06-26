@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image, Alert } from "react-native";
 
 import { useAuth } from "../hooks/useAuth";
 
@@ -10,7 +10,9 @@ const OAuthButton = ({ google }) => {
 
   return (
     <TouchableOpacity
-      onPress={google && signInWithGoogle}
+      onPress={
+        google ? signInWithGoogle : () => Alert.alert("", "Not available yet.")
+      }
       style={styles.container}
     >
       <View style={{ marginHorizontal: 15 }} />

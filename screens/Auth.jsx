@@ -9,6 +9,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -32,14 +33,18 @@ const AuthScreen = () => {
   const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      await sendVerificationCode(phoneNumber, recaptchaVerifier.current);
-      navigate("verify-otp");
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+    if (phoneNumber.length < 4) {
+      Alert.alert("", "Phone number is required.");
+    } else {
+      setLoading(true);
+      try {
+        await sendVerificationCode(phoneNumber, recaptchaVerifier.current);
+        navigate("verify-otp");
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     }
   };
 
